@@ -78,26 +78,25 @@ table = document.getElementById("table");
 
 table.appendChild(row = document.createElement("tr"));
 
-for(i = 1; i < 6; i++){
-    header = document.createElement("th");
-    header.innerHTML = schedule[i][0];
-    row.appendChild(header);
-}
-//fix
-for(i = 1; i < 11; i++){
+var day = schedule[new Date().getDay()];
+
+for(i = 1; i < day.length; i++){
     table.appendChild(row = document.createElement("tr"));
-    for(j = 1; j < 6; j++){
-    	timeentry = document.createElement("td");
-        arr = schedule[j][i]
-        if(arr){
-    		timeentry.innerHTML = arr[2] + "\n" + formatTime(arr[0]+"")+" - " + formatTime(arr[1]+"");
-    	}
-        row.appendChild(timeentry);
+    timeentry = document.createElement("td");
+    arr = day[i]
+    if(arr){
+    	timeentry.innerHTML = arr[2] + "\n" + formatTime(arr[0]+"")+" - " + formatTime(arr[1]+"");
     }
+    row.appendChild(timeentry);
 }
 </script>
 <style>
-table, tr, td, th {
+* {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+table, td {
     border: 1px solid black;
     border-collapse: collapse;
 }
