@@ -42,34 +42,18 @@ function formatTime(t){
     return t.toString().replace(/(\d\d)$/,":$1");
 };
 
-function createTimeString(m, s, short){
-	var h = m / 60 | 0;
+function createTimeString(h, m, s){
+	var hs = h.toString(),
+    	ms = m < 10 ? "0" + m.toString() : m.toString(),
+    	ss = s < 10 ? "0" + s.toString() : s.toString();
     
-    m = m % 60;
     if(h > 0){
-    	if(short){
-        	return h + "h " + m + "m " + s + "s";
-        }
-        else {
-    		return h + " hours, " + m + " minutes, and " + s + " seconds";
-        }
+        return hs + ":" + ms + ":" + ss;
     }
     else if(m > 0){
-        if(short){
-        	return m + "m " + s + "s";
-        }
-        else {
-        	return m + " minutes and " + s + " seconds";
-    	}
+    	return ms + ":" + ss;
     }
-    else {
-    	if(short){
-        	return s + "s";
-        }
-    	else {
-        	return s + " seconds";
-    	}
-    }
+    return "00:" + ss;
 }
 
 function updateDaySchedule(day, period){
@@ -120,8 +104,8 @@ var displayedDay, displayedPeriod = 1;
             	minutesLeft--;
                 secondsLeft = 60 - secondsLeft;
             }
-        	banner.innerHTML = period[2] + " ends in: " + createTimeString(minutesLeft, secondsLeft, false);
-       		document.title = document.getElementsByTagName("text")[0].innerHTML = createTimeString(minutesLeft, secondsLeft, true);
+        	banner.innerHTML = period[2] + " ends in: ";
+       		document.title = document.getElementsByTagName("text")[0].innerHTML = createTimeString(minutesLeft / 60 | 0, minutesLeft % 60, secondsLeft);
     	} else {
     		banner.innerHTML = document.title = "Passing Period";
     	}
