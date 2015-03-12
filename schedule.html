@@ -2,9 +2,33 @@
 <body>
 <head>
 <meta name=viewport content="width=device-width, initial-scale=1">
+<style>
+path {
+    fill: none;
+    stroke-width: 1;
+    stroke: red;
+}
+</style>
 </head>
+
 <h3 id="day"></h3>
 <p id="banner"></p>
+
+<!-- SVG -->
+
+<svg width="152px" height="152px">
+<path 
+        d="
+        M 76, 1
+        a 75,75 0 1,1 0,150
+        a 75,75 0 1,1 0,-150
+        "
+  />
+<text text-anchor="middle" alignment-baseline="middle" x="76" y="76"></text>
+
+</svg>
+
+<!-- END SVG -->
 
 <table id="table" style="white-space:pre"></table>
 </body>
@@ -48,6 +72,28 @@ function createTimeString(m, s, short){
     }
 }
 
+function updateDaySchedule(day, period){
+    var table = document.getElementById("table"),
+        day = schedule[new Date().getDay()];
+
+	document.getElementById("day").innerHTML = day[0];
+
+    table.innerHTML = "";
+
+    for(i = period; i < day.length; i++){
+    	var row = document.createElement("tr"),
+            timeEntry = document.createElement("td");
+
+        if(day[i]){
+        	timeEntry.innerHTML = day[i][2] + "\n" + formatTime(day[i][0])+" - " + formatTime(day[i][1]);
+        }
+        table.appendChild(row);
+        row.appendChild(timeEntry);
+    }
+}
+
+var displayedDay, displayedPeriod = 1;
+
 (function tick(){
 	var banner = document.getElementById("banner"),
 	    date = new Date(),
@@ -61,6 +107,10 @@ function createTimeString(m, s, short){
         for(var i = 1; i < day.length; i++){
         	if(currTime >= day[i][0] && currTime < day[i][1]){
             	period = day[i];
+            	if(displayedPeriod != i){
+    				displayedPeriod = i;
+    				updateDaySchedule(displayedDay, displayedPeriod);
+    			}
             }
         }
         if(period){
@@ -71,32 +121,20 @@ function createTimeString(m, s, short){
                 secondsLeft = 60 - secondsLeft;
             }
         	banner.innerHTML = period[2] + " ends in: " + createTimeString(minutesLeft, secondsLeft, false);
-       		document.title = createTimeString(minutesLeft, secondsLeft, true);
+       		document.title = document.getElementsByTagName("text")[0].innerHTML = createTimeString(minutesLeft, secondsLeft, true);
     	} else {
-    		banner.innerHTML = document.title=("Passing Period");
+    		banner.innerHTML = document.title = "Passing Period";
     	}
 	} else {
-		banner.innerHTML=document.title=("No School");
+		banner.innerHTML = document.title = "No School";
 	}
-	document.getElementById("day").innerHTML=day[0];
-	setTimeout(tick,+new Date() % 1000);
+    if(displayedDay != date.getDay()){
+    	displayedDay = date.getDay();
+    	updateDaySchedule(displayedDay, displayedPeriod);
+    }
+	setTimeout(tick, +new Date() % 1000);
 })();
 
-table = document.getElementById("table");
-
-table.appendChild(row = document.createElement("tr"));
-
-var day = schedule[new Date().getDay()];
-
-for(i = 1; i < day.length; i++){
-    table.appendChild(row = document.createElement("tr"));
-    timeentry = document.createElement("td");
-    arr = day[i]
-    if(arr){
-    	timeentry.innerHTML = arr[2] + "\n" + formatTime(arr[0])+" - " + formatTime(arr[1]);
-    }
-    row.appendChild(timeentry);
-}
 </script>
 <style>
 * {
