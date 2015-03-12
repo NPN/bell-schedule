@@ -3,6 +3,11 @@
 <head>
 <meta name=viewport content="width=device-width, initial-scale=1">
 <style>
+* {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
 path {
     fill: none;
     stroke-width: 1;
@@ -11,8 +16,7 @@ path {
 </style>
 </head>
 
-<h3 id="day"></h3>
-<p id="banner"></p>
+<h3 id="period"></h3>
 
 <!-- SVG -->
 
@@ -35,13 +39,6 @@ path {
 <script>
 var schedule = [,["Monday",[810,900,"1st Period"],[905,1000,"2nd Period"],[1000,1010,"Brunch"],[1015,1105,"3rd Period"],[1110,1200,"4th Period"],[1200,1245,"Lunch"],[1250,1340,"5th Period"],[1345,1435,"6th Period"],[1440,1530,"7th Period"]],["Tuesday",[810,855,"1st Period"],[900,950,"2nd Period"],[950,1000,"Brunch"],[1005,1050,"3rd Period"],[1055,1125,"Tutorial"],[1130,1215,"4th Period"],[1215,1300,"Lunch"],[1305,1350,"5th Period"],[1355,1440,"6th Period"],[1445,1530,"7th Period"]],["Wednesday",[850,1025,"2nd Period"],[1025,1040,"Brunch"],[1045,1215,"4th Period"],[1215,1300,"Lunch"],[1305,1435,"6th Period"]],["Thursday",[810,945,"1st Period"],[945,1000,"Brunch"],[1005,1135,"3rd Period"],[1135,1220,"Lunch"],[1225,1355,"5th Period"],[1400,1530,"7th Period"]],["Friday",[810,900,"1st Period"],[905,1000,"2nd Period"],[1000,1010,"Brunch"],[1015,1105,"3rd Period"],[1110,1200,"4th Period"],[1200,1245,"Lunch"],[1250,1340,"5th Period"],[1345,1435,"6th Period"],[1440,1530,"7th Period"]]];
 
-function formatTime(t){
-    if(Math.floor(t/100) > 12){
-    	t -= 1200;
-    }
-    return t.toString().replace(/(\d\d)$/,":$1");
-};
-
 function createTimeString(h, m, s){
 	var hs = h.toString(),
     	ms = m < 10 ? "0" + m.toString() : m.toString(),
@@ -56,30 +53,8 @@ function createTimeString(h, m, s){
     return "00:" + ss;
 }
 
-function updateDaySchedule(day, period){
-    var table = document.getElementById("table"),
-        day = schedule[new Date().getDay()];
-
-	document.getElementById("day").innerHTML = day[0];
-
-    table.innerHTML = "";
-
-    for(i = period; i < day.length; i++){
-    	var row = document.createElement("tr"),
-            timeEntry = document.createElement("td");
-
-        if(day[i]){
-        	timeEntry.innerHTML = day[i][2] + "\n" + formatTime(day[i][0])+" - " + formatTime(day[i][1]);
-        }
-        table.appendChild(row);
-        row.appendChild(timeEntry);
-    }
-}
-
-var displayedDay, displayedPeriod = 1;
-
 (function tick(){
-	var banner = document.getElementById("banner"),
+	var periodElem = document.getElementById("period"),
 	    date = new Date(),
     	hours = date.getHours(),
 		mins = date.getMinutes(),
@@ -91,10 +66,6 @@ var displayedDay, displayedPeriod = 1;
         for(var i = 1; i < day.length; i++){
         	if(currTime >= day[i][0] && currTime < day[i][1]){
             	period = day[i];
-            	if(displayedPeriod != i){
-    				displayedPeriod = i;
-    				updateDaySchedule(displayedDay, displayedPeriod);
-    			}
             }
         }
         if(period){
@@ -104,31 +75,16 @@ var displayedDay, displayedPeriod = 1;
             	minutesLeft--;
                 secondsLeft = 60 - secondsLeft;
             }
-        	banner.innerHTML = period[2] + " ends in: ";
+        	periodElem.innerHTML = period[2];
        		document.title = document.getElementsByTagName("text")[0].innerHTML = createTimeString(minutesLeft / 60 | 0, minutesLeft % 60, secondsLeft);
     	} else {
-    		banner.innerHTML = document.title = "Passing Period";
+    		periodElem.innerHTML = document.title = "Passing Period";
     	}
 	} else {
-		banner.innerHTML = document.title = "No School";
+		periodElem.innerHTML = document.title = "No School";
 	}
-    if(displayedDay != date.getDay()){
-    	displayedDay = date.getDay();
-    	updateDaySchedule(displayedDay, displayedPeriod);
-    }
 	setTimeout(tick, +new Date() % 1000);
 })();
 
 </script>
-<style>
-* {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-}
-table, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-</style>
 </html>
