@@ -13,21 +13,18 @@ path {
     stroke-width: 2;
     stroke: red;
 }
+#gray {
+    stroke: #eee;
+}
 </style>
 </head>
 
 <h1 id="period"></h1>
 
 <svg width="70%" height="50%" viewBox="0 0 152 152">
-<path 
-        d="
-        M 76, 1
-        a 75,75 0 1,1 0,150
-        a 75,75 0 1,1 0,-150
-        "
-  />
-<text text-anchor="middle" alignment-baseline="middle" x="76" y="76"></text>
-
+	<path id="gray" d="M76,1 a75,75 0 1,1 0,150 a75,75 0 1,1 0,-150"/>
+	<path id="red" d="M76,1 a75,75 0 1,1 0,150 a75,75 0 1,1 0,-150"/>
+	<text text-anchor="middle" alignment-baseline="middle" x="76" y="76"></text>
 </svg>
 
 </body>
@@ -89,7 +86,7 @@ function getPeriod(time, day){
 }
 
 function setProgressBar(duration, offset){
-    var path = document.querySelector("path");
+    var path = document.getElementById("red");
     var length = path.getTotalLength();
     path.style.transition = "none";
     path.style.strokeDasharray = length + " " + length;
