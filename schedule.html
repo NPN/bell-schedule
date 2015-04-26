@@ -55,24 +55,13 @@ function createTimeString(h, m, s){
 		day = schedule[date.getDay()];
     
 	if(time >= day[1][0] && time < day[day.length-1][1]){
-    	var period;
-        for(var i = 1; i < day.length; i++){
-        	if(time >= day[i][0] && time < day[i][1]){
-            	period = day[i];
-            }
-        }
-        if(period){
-        	var minutesLeft = period[1] - time,
-            	seconds = date.getSeconds(),
-            	secondsLeft = seconds ? (minutesLeft--,60-seconds) : seconds;
+    	var period = getPeriod(time, day),
+        	minutesLeft = period[1] - time,
+    		seconds = date.getSeconds(),
+        	secondsLeft = seconds ? (minutesLeft--,60-seconds) : seconds;
 
-        	periodElem.innerHTML = period[2];
-       		document.title = textElem.innerHTML = createTimeString(minutesLeft / 60 | 0, minutesLeft % 60, secondsLeft);
-    	}
-        else {
-    		periodElem.innerHTML = document.title = "Passing Period";
-            textElem.innerHTML = "";
-    	}
+        periodElem.innerHTML = period[2];
+       	document.title = textElem.innerHTML = createTimeString(minutesLeft / 60 | 0, minutesLeft % 60, secondsLeft);
 	}
 	else {
 		periodElem.innerHTML = document.title = "No School";
@@ -80,6 +69,17 @@ function createTimeString(h, m, s){
 	}
 	setTimeout(tick, 1000);
 })();
+    
+function getPeriod(time, day){
+	for(var i = 1; i < day.length; i++){
+    	if(time >= day[i][0] && time < day[i][1]){
+        	return day[i];
+        }
+        else if(i + 1 < day.length && time >= day[i][1] && time < day[i+1][0]){
+            return [day[i][1], day[i+1][0], "Passing Period"];	
+        }
+    }
+}
 
 function setProgressBar(duration, offset){
     var path = document.querySelector("path");
