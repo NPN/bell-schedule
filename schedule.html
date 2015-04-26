@@ -34,6 +34,8 @@ path {
 <script>
 var schedule = [,["Monday",[490,540,"1st Period"],[545,600,"2nd Period"],[600,610,"Brunch"],[615,665,"3rd Period"],[670,720,"4th Period"],[720,765,"Lunch"],[770,820,"5th Period"],[825,875,"6th Period"],[880,930,"7th Period"]],["Tuesday",[490,535,"1st Period"],[540,590,"2nd Period"],[590,600,"Brunch"],[605,650,"3rd Period"],[655,685,"Tutorial"],[690,735,"4th Period"],[735,780,"Lunch"],[785,830,"5th Period"],[835,880,"6th Period"],[885,930,"7th Period"]],["Wednesday",[530,625,"2nd Period"],[625,640,"Brunch"],[645,735,"4th Period"],[735,780,"Lunch"],[785,875,"6th Period"]],["Thursday",[490,585,"1st Period"],[585,600,"Brunch"],[605,695,"3rd Period"],[695,740,"Lunch"],[745,835,"5th Period"],[840,930,"7th Period"]],["Friday",[490,540,"1st Period"],[545,600,"2nd Period"],[600,610,"Brunch"],[615,665,"3rd Period"],[670,720,"4th Period"],[720,765,"Lunch"],[770,820,"5th Period"],[825,875,"6th Period"],[880,930,"7th Period"]]];
 
+var currentPeriod;
+    
 function createTimeString(h, m, s){
 	var hs = h.toString(),
     	ss = s < 10 ? "0" + s.toString() : s.toString();
@@ -62,6 +64,11 @@ function createTimeString(h, m, s){
 
         periodElem.innerHTML = period[2];
        	document.title = textElem.innerHTML = createTimeString(minutesLeft / 60 | 0, minutesLeft % 60, secondsLeft);
+        
+		if(!currentPeriod || !currentPeriod.every(function(c,i){return c == period[i]})){
+			setProgressBar(60 * (period[1] - period[0]), 60 * (time - period[0]) + seconds);
+			currentPeriod = period;
+		}
 	}
 	else {
 		periodElem.innerHTML = document.title = "No School";
