@@ -53,7 +53,7 @@ function createTimeString(h, m, s){
 		time = date.getHours() * 60 + date.getMinutes(),
 		day = schedule[date.getDay()];
     
-	if(time >= day[1][0] && time < day[day.length-1][1]){
+	if(day && time >= day[1][0] && time < day[day.length-1][1]){
     	var period = getPeriod(time, day),
         	minutesLeft = period[1] - time,
     		seconds = date.getSeconds(),
