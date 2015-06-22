@@ -76,7 +76,7 @@ function createTimeString(h, m, s){
         path.style.strokeDasharray = length + " " + length;
         path.style.strokeDashoffset = length;
 	}
-	setTimeout(tick, 1000);
+	setTimeout(tick, 1000 - (Date.now() % 1000));
 })();
     
 function getPeriod(time, day){
