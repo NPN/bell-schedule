@@ -70,6 +70,11 @@ function createTimeString(h, m, s){
 	else {
 		periodElem.innerHTML = document.title = "No School";
 		textElem.innerHTML = "";
+
+        var path = document.getElementById("red"),
+            length = path.getTotalLength();
+        path.style.strokeDasharray = length + " " + length;
+        path.style.strokeDashoffset = length;
 	}
 	setTimeout(tick, 1000);
 })();
@@ -86,8 +91,8 @@ function getPeriod(time, day){
 }
 
 function setProgressBar(duration, offset){
-    var path = document.getElementById("red");
-    var length = path.getTotalLength();
+    var path = document.getElementById("red"),
+        length = path.getTotalLength();
     path.style.transition = "none";
     path.style.strokeDasharray = length + " " + length;
     path.style.strokeDashoffset = length;
