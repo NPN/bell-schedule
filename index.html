@@ -41,9 +41,9 @@ function createTimeString(h, m, s){
         return hs + ":" + (m < 10 ? "0" : "") + m + ":" + ss;
     }
     else if(m > 0){
-    	return m + ":" + ss;
+        return (m < 10 ? "0" : "") + m + ":" + ss;
     }
-    return "0:" + ss;
+    return "00:" + ss;
 }
 
 (function tick(){
