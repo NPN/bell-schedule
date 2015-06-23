@@ -57,7 +57,7 @@ var currentPeriod;
     var periodElem = document.getElementById("period"),
         textElem = document.getElementsByTagName("text")[0],
         date = new Date(),
-        time = date.getHours() * 60 + date.getMinutes(),
+        time = getMinuteTime(),
         day = schedule[date.getDay()];
 
     if(day && time >= day[0][0] && time < day[day.length-1][1]){
@@ -121,6 +121,11 @@ function setProgressBar(duration, offset){
     path.getBoundingClientRect();
     path.style.transition = "stroke-dashoffset " + duration + "s linear" + (offset? " -" + offset + "s" : "");
     path.style.strokeDashoffset = '0';
+}
+
+function getMinuteTime(){
+    var date = new Date();
+    return date.getHours() * 60 + date.getMinutes();
 }
 </script>
 </html>
