@@ -53,19 +53,6 @@ var schedule = [,[[490,540,"1st Period"],[545,600,"2nd Period"],[600,610,"Brunch
 
 var currentPeriod;
 
-function createTimeString(h, m, s){
-    var hs = h.toString(),
-        ss = s < 10 ? "0" + s.toString() : s.toString();
-
-    if(h > 0){
-        return hs + ":" + (m < 10 ? "0" : "") + m + ":" + ss;
-    }
-    else if(m > 0){
-        return (m < 10 ? "0" : "") + m + ":" + ss;
-    }
-    return "00:" + ss;
-}
-
 (function tick(){
     var periodElem = document.getElementById("period"),
         textElem = document.getElementsByTagName("text")[0],
@@ -99,6 +86,19 @@ function createTimeString(h, m, s){
     }
     setTimeout(tick, 1000 - (Date.now() % 1000));
 })();
+
+function createTimeString(h, m, s){
+    var hs = h.toString(),
+        ss = s < 10 ? "0" + s.toString() : s.toString();
+
+    if(h > 0){
+        return hs + ":" + (m < 10 ? "0" : "") + m + ":" + ss;
+    }
+    else if(m > 0){
+        return (m < 10 ? "0" : "") + m + ":" + ss;
+    }
+    return "00:" + ss;
+}
 
 function getPeriod(time, day){
     for(var i = 0; i < day.length; i++){
