@@ -70,7 +70,7 @@ var currentPeriod;
         document.title = textElem.innerHTML = createTimeString(minutesLeft / 60 | 0, minutesLeft % 60, secondsLeft);
 
         if(!currentPeriod){
-            requestAnimationFrame(setProgressBar);
+            requestAnimationFrame(updateProgressBar);
         }
         currentPeriod = period;
     }
@@ -112,7 +112,7 @@ function getPeriod(time, day){
     }
 }
 
-function setProgressBar(){
+function updateProgressBar(){
     if(!currentPeriod){
         return;
     }
@@ -121,7 +121,7 @@ function setProgressBar(){
 
     path.style.strokeDasharray = length + " " + length;
     path.style.strokeDashoffset = length * (1 - percentPeriodElapsed(currentPeriod));
-    requestAnimationFrame(setProgressBar);
+    requestAnimationFrame(updateProgressBar);
 }
 
 function getMinuteTime(){
