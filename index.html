@@ -45,7 +45,9 @@ var schedule = [,[[490,540,"1st Period"],[545,600,"2nd Period"],[600,610,"Brunch
 
 var currentPeriod;
 
-(function tick(){
+document.addEventListener("DOMContentLoaded", tick);
+
+function tick(){
     var periodElem = document.getElementById("period"),
         textElem = document.getElementsByTagName("text")[0],
         date = new Date(),
@@ -75,7 +77,7 @@ var currentPeriod;
         path.style.strokeDashoffset = length;
     }
     setTimeout(tick, 1000 - (Date.now() % 1000));
-})();
+};
 
 function createTimeLeftString(time){
     var secondsLeft = -secSinceMinTime(time),
