@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
-<body>
 <head>
-<meta name=viewport content="width=device-width, initial-scale=1">
+<title>Bell Schedule</title>
+<meta charset="utf-8"/>
+<meta name=viewport content="width=device-width, initial-scale=1"/>
 <style>
 * {
     text-align: center;
@@ -38,17 +39,7 @@ svg {
     margin: 0px 20px;
 }
 </style>
-</head>
 
-<h1 id="period"></h1>
-
-<svg viewBox="0 0 160 160">
-    <path id="white" d="M79,4 a75,75 0 1,1 0,150 a75,75 0 1,1 0,-150"/>
-    <path id="red" d="M79,4 a75,75 0 1,1 0,150 a75,75 0 1,1 0,-150"/>
-    <text text-anchor="middle" alignment-baseline="middle" x="80" y="81"></text>
-</svg>
-
-</body>
 <script>
 var schedule = [,[[490,540,"1st Period"],[545,600,"2nd Period"],[600,610,"Brunch"],[615,665,"3rd Period"],[670,720,"4th Period"],[720,765,"Lunch"],[770,820,"5th Period"],[825,875,"6th Period"],[880,930,"7th Period"]],[[490,535,"1st Period"],[540,590,"2nd Period"],[590,600,"Brunch"],[605,650,"3rd Period"],[655,685,"Tutorial"],[690,735,"4th Period"],[735,780,"Lunch"],[785,830,"5th Period"],[835,880,"6th Period"],[885,930,"7th Period"]],[[530,625,"2nd Period"],[625,640,"Brunch"],[645,735,"4th Period"],[735,780,"Lunch"],[785,875,"6th Period"]],[[490,585,"1st Period"],[585,600,"Brunch"],[605,695,"3rd Period"],[695,740,"Lunch"],[745,835,"5th Period"],[840,930,"7th Period"]],[[490,540,"1st Period"],[545,600,"2nd Period"],[600,610,"Brunch"],[615,665,"3rd Period"],[670,720,"4th Period"],[720,765,"Lunch"],[770,820,"5th Period"],[825,875,"6th Period"],[880,930,"7th Period"]]];
 
@@ -141,4 +132,17 @@ function secSinceMinTime(time){
     return 60 * (getMinuteTime() - time) + new Date().getSeconds();
 }
 </script>
+</head>
+
+<body>
+<h1 id="period">Bell Schedule</h1>
+
+<svg viewBox="0 0 160 160">
+    <path id="white" d="M79,4 a75,75 0 1,1 0,150 a75,75 0 1,1 0,-150"/>
+    <path id="red" d="M79,4 a75,75 0 1,1 0,150 a75,75 0 1,1 0,-150"/>
+    <text text-anchor="middle" alignment-baseline="middle" x="80" y="81"></text>
+</svg>
+
+</body>
+
 </html>
