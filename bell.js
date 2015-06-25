@@ -2,7 +2,12 @@ var schedule = [,[[490,540,"1st Period"],[545,600,"2nd Period"],[600,610,"Brunch
 
 var currentPeriod;
 
-document.addEventListener("DOMContentLoaded", tick);
+if(document.readyState == "complete"){
+    tick();
+}
+else {
+    document.addEventListener("DOMContentLoaded", tick);
+}
 
 function tick(){
     var periodElem = document.getElementById("period"),
