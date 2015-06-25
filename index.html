@@ -108,7 +108,7 @@ function getPeriod(time, day){
         if(time >= day[i][0] && time < day[i][1]){
             return day[i];
         }
-        else if(i + 1 < day.length && time >= day[i][1] && time < day[i+1][0]){
+        else if(i < day.length - 1 && time >= day[i][1] && time < day[i+1][0]){
             return [day[i][1], day[i+1][0], "Passing Period"];
         }
     }
