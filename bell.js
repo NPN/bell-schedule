@@ -12,9 +12,8 @@ else {
 function tick(){
     var periodElem = document.getElementById("period"),
         textElem = document.getElementsByTagName("text")[0],
-        date = new Date(),
         time = getMinuteTime(),
-        day = schedule[date.getDay()];
+        day = schedule[new Date().getDay()];
 
     if(day && time >= day[0][0] && time < day[day.length-1][1]){
         var period = getPeriod(time, day);
