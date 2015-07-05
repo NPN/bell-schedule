@@ -38,7 +38,7 @@ function tick(){
         path.style.strokeDashoffset = length;
     }
     setTimeout(tick, 1000 - (Date.now() % 1000));
-};
+}
 
 function createTimeLeftString(time){
     var secondsLeft = -secSinceMinTime(time),
