@@ -18,8 +18,8 @@ function tick(){
     if(day && time >= day[0][0] && time < day[day.length-1][1]){
         var period = getPeriod(time, day);
 
-        periodElem.innerHTML = period[2];
-        document.title = textElem.innerHTML = createTimeLeftString(period[1]);
+        periodElem.textContent = period[2];
+        document.title = textElem.textContent = createTimeLeftString(period[1]);
 
         if(!currentPeriod){
             requestAnimationFrame(updateProgressBar);
@@ -28,8 +28,8 @@ function tick(){
     }
     else {
         currentPeriod = null;
-        periodElem.innerHTML = document.title = "No School";
-        textElem.innerHTML = "";
+        periodElem.textContent = document.title = "No School";
+        textElem.textContent = "";
 
         var path = document.getElementById("red"),
             length = path.getTotalLength();
