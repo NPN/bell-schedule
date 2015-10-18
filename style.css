@@ -6,9 +6,17 @@ body {
 }
 h1 {
     text-align: center;
-    font-size: 30pt;
-    min-height: 30pt;
     color: #262626;
+}
+@media (orientation: portrait) {
+    h1 {
+        font-size: 6vmax;
+    }
+}
+@media (orientation: landscape) {
+    h1 {
+        font-size: 4vmax;
+    }
 }
 svg {
     margin: 0px 10px;
