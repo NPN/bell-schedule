@@ -2,14 +2,14 @@ var schedule = [,[[490,540,"1st Period"],[545,600,"2nd Period"],[600,610,"Brunch
 
 var currentPeriod, periodElem, textElem, progressBar, progressBarLen;
 
-if(document.readyState == "complete"){
+if (document.readyState == "complete") {
     initialize();
 }
 else {
     document.addEventListener("DOMContentLoaded", initialize);
 }
 
-function initialize(){
+function initialize() {
     periodElem = document.getElementById("period");
     textElem = document.getElementsByTagName("text")[0];
 
@@ -20,11 +20,11 @@ function initialize(){
     tick();
 }
 
-function tick(){
+function tick() {
     var time = getMinuteTime(),
         day = schedule[new Date().getDay()];
 
-    if(day && time >= day[0][0] && time < day[day.length-1][1]){
+    if (day && time >= day[0][0] && time < day[day.length-1][1]) {
         var period = getPeriod(time, day);
 
         periodElem.textContent = period[2];
@@ -42,7 +42,7 @@ function tick(){
     setTimeout(tick, 1000 - (Date.now() % 1000));
 }
 
-function createTimeLeftString(time){
+function createTimeLeftString(time) {
     var secondsLeft = -secSinceMinTime(time),
         h = Math.floor(secondsLeft / 3600),
         m = Math.floor((secondsLeft % 3600) / 60),
@@ -51,28 +51,28 @@ function createTimeLeftString(time){
     m = (m < 10 ? "0" : "") + m;
     s = (s < 10 ? "0" : "") + s;
 
-    if(h > 0){
+    if (h > 0) {
         return h + ":" + m + ":" + s;
     }
-    else if(m > 0){
+    else if (m > 0) {
         return m + ":" + s;
     }
     return "00:" + s;
 }
 
-function getPeriod(time, day){
-    for(var i = 0; i < day.length; i++){
-        if(time >= day[i][0] && time < day[i][1]){
+function getPeriod(time, day) {
+    for (var i = 0; i < day.length; i++) {
+        if (time >= day[i][0] && time < day[i][1]) {
             return day[i];
         }
-        else if(i < day.length - 1 && time >= day[i][1] && time < day[i+1][0]){
+        else if (i < day.length - 1 && time >= day[i][1] && time < day[i+1][0]) {
             return [day[i][1], day[i+1][0], "Passing Period"];
         }
     }
 }
 
-function updateProgressBar(){
-    if(!currentPeriod){
+function updateProgressBar() {
+    if (!currentPeriod) {
         progressBar.style.strokeDashoffset = progressBarLen;
     }
     else {
@@ -81,16 +81,16 @@ function updateProgressBar(){
     }
 }
 
-function getMinuteTime(){
+function getMinuteTime() {
     var date = new Date();
     return date.getHours() * 60 + date.getMinutes();
 }
 
-function percentPeriodElapsed(period){
+function percentPeriodElapsed(period) {
     var secondsInPeriod = 60 * (period[1] - period[0]);
     return secSinceMinTime(period[0]) / secondsInPeriod;
 }
 
-function secSinceMinTime(time){
+function secSinceMinTime(time) {
     return 60 * (getMinuteTime() - time) + new Date().getSeconds();
 }
