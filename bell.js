@@ -1,6 +1,6 @@
 var schedule = [,[[490,540,"1st Period"],[545,600,"2nd Period"],[600,610,"Brunch"],[615,665,"3rd Period"],[670,720,"4th Period"],[720,765,"Lunch"],[770,820,"5th Period"],[825,875,"6th Period"],[880,930,"7th Period"]],[[490,535,"1st Period"],[540,590,"2nd Period"],[590,600,"Brunch"],[605,650,"3rd Period"],[655,685,"Tutorial"],[690,735,"4th Period"],[735,780,"Lunch"],[785,830,"5th Period"],[835,880,"6th Period"],[885,930,"7th Period"]],[[530,625,"2nd Period"],[625,640,"Brunch"],[645,735,"4th Period"],[735,780,"Lunch"],[785,875,"6th Period"]],[[490,585,"1st Period"],[585,600,"Brunch"],[605,695,"3rd Period"],[695,740,"Lunch"],[745,835,"5th Period"],[840,930,"7th Period"]],[[490,540,"1st Period"],[545,600,"2nd Period"],[600,610,"Brunch"],[615,665,"3rd Period"],[670,720,"4th Period"],[720,765,"Lunch"],[770,820,"5th Period"],[825,875,"6th Period"],[880,930,"7th Period"]]];
 
-var currentPeriod, periodElem, textElem, path;
+var currentPeriod, periodElem, textElem, progressBar, progressBarLen;
 
 if(document.readyState == "complete"){
     initialize();
@@ -12,7 +12,11 @@ else {
 function initialize(){
     periodElem = document.getElementById("period");
     textElem = document.getElementsByTagName("text")[0];
-    path = document.getElementById("red");
+
+    progressBar = document.getElementById("red");
+    progressBarLen = progressBar.getTotalLength();
+    progressBar.style.strokeDasharray = progressBarLen + " " + progressBarLen;
+
     tick();
 }
 
@@ -27,18 +31,14 @@ function tick(){
         document.title = textElem.textContent = createTimeLeftString(period[1]);
 
         currentPeriod = period;
-        requestAnimationFrame(updateProgressBar);
     }
     else {
-        currentPeriod = null;
         periodElem.textContent = document.title = "No School";
         textElem.textContent = "";
 
-        var length = path.getTotalLength();
-
-        path.style.strokeDasharray = length + " " + length;
-        path.style.strokeDashoffset = length;
+        currentPeriod = null;
     }
+    requestAnimationFrame(updateProgressBar);
     setTimeout(tick, 1000 - (Date.now() % 1000));
 }
 
@@ -73,12 +73,12 @@ function getPeriod(time, day){
 
 function updateProgressBar(){
     if(!currentPeriod){
-        return;
+        progressBar.style.strokeDashoffset = progressBarLen;
     }
-    var length = path.getTotalLength();
-
-    path.style.strokeDasharray = length + " " + length;
-    path.style.strokeDashoffset = length * (1 - percentPeriodElapsed(currentPeriod));
+    else {
+        progressBar.style.strokeDashoffset =
+            progressBarLen * (1 - percentPeriodElapsed(currentPeriod));
+    }
 }
 
 function getMinuteTime(){
